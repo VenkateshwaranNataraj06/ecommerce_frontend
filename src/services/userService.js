@@ -43,7 +43,7 @@ export const getUsers = async () => {
 
 export const createUsers = async (dataToSend) => {
     try {
-        const response = await axios.post('http://localhost:4000/users/signup', dataToSend);
+        const response = await axios.post(`${API}/users/signup`, dataToSend);
     
         return response; 
     } 

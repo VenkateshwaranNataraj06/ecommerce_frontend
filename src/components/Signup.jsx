@@ -66,7 +66,7 @@ export default function Signup() {
         } catch (error) {
             // console.log(error.message);
             // console.log(error.response?.data,"ugyg");
-            const errorMessage = error.response?.data?.message||error.response?.data?.Invalid || 'Signup failed';
+            const errorMessage = error?.response?.data?.message||error.response?.data?.Invalid || 'Signup failed';
             toast.error(errorMessage)
           
         }
