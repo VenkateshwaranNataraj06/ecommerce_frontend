@@ -201,7 +201,7 @@ export default function CategoryAdd() {
                     <Box display="flex" justifyContent="flex-end">
                         <IconButton
                             color="inherit"
-                            onClick={() => navigate('/adminproduct')}
+                            onClick={() => setShowAddCategoryForm(!showAddCategoryForm)}
 
                         >
                             <CloseIcon sx={{
