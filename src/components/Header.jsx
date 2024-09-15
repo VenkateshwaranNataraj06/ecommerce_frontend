@@ -136,7 +136,7 @@ export default function Header() {
 
           </div>
 
-          <nav className='max-[400px]:mt-2'>
+          <nav className='mt-2 max-[400px]:mt-2'>
             <ul className="flex space-x-4 mt-2 ml-2 mr-4 max-[400px]:space-x-1 mr-2">
               <li className='max-[400px]:ml-4'> {userRole !== 'admin' ? (<Link to='/' className="  hover:bg-[#EA84E5] p-2 rounded-lg text-lg font-semibold "> Home</Link>) : (<Link to='/adminhome' className="  hover:bg-[#EA84E5] p-2 rounded-lg text-lg font-semibold "> Home</Link>)
  
