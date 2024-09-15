@@ -11,7 +11,7 @@ import { getCategories, addCategory } from '../services/categoryServices';
 import {
   Container, Grid, Card, CardContent, CardMedia, Typography, TextField, Paper, Dialog, DialogContent, IconButton, Button, CircularProgress, Snackbar, Alert, Box, InputAdornment,
 } from '@mui/material';
-import ImageZoom from './ImageZoom';
+// import ImageZoom from './ImageZoom';
 
 
 
@@ -257,14 +257,14 @@ export default function ProductDetails ()  {
 
                 }}>
 
-                  <ImageZoom src={product.images[0]} alt={product.name} />
-                  {/* <img src={product.images[0]} alt={product.name} width={500} height={500}
+                  {/* <ImageZoom src={product.images[0]} alt={product.name} /> */}
+                  <img src={product.images[0]} alt={product.name} width={500} height={500}
                           
                           style={{
                             maxWidth: '100%',
                             maxHeight: '100%',
-                            objectFit: 'contain', // Ensures the image scales to fit within the container while maintaining its aspect ratio
-                          }}/> */}
+                            objectFit: 'contain', 
+                          }}/>
 
                 </div>
 
@@ -364,7 +364,16 @@ export default function ProductDetails ()  {
                     </TextContainer>
                   </Grid>
                   <Grid item xs={12} md={8} sm={3} lg={6} sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
-                    <ImageZoom src={product.images[0]} alt={product.name} sx={{ mb: 1 }} />
+                    {/* <ImageZoom src={product.images[0]} alt={product.name} sx={{ mb: 1 }} /> */}
+
+
+                    <img src={product.images[0]} alt={product.name} width={300} height={400}
+                          
+                          style={{
+                            maxWidth: '100%',
+                            maxHeight: '100%',
+                            objectFit: 'contain', 
+                          }}/>
                     <Typography variant="body1" paragraph sx={{ mb: 1 }}>
                       {product.description}
                     </Typography>
