@@ -1,0 +1,127 @@
+.video-container {
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+  }
+  
+ .video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    object-fit: cover; 
+    opacity: 0.7;
+    
+
+
+  }
+  
+  .content {
+    position: relative;
+    z-index: 1; 
+    text-align: center;
+    color: white;
+    font-size: 2rem;
+  }
+  .image-container{
+    position: absolute;
+    top: 10%; 
+   left: 5%; 
+   
+   z-index: 1;
+   max-width: 100%;
+   
+   height: auto 
+  }
+
+  .image{
+   
+max-width: 100vw;
+ height: auto
+  }
+
+  
+
+ 
+  @media (max-width:900px) {
+    .video-container{
+     
+      height: 40vh;  
+    }
+    .image-container{
+      position: absolute;
+      top: 10%; 
+     left: 5%; 
+     
+     z-index: 1;
+     max-width: 100%;
+     
+     height: auto 
+    }
+
+    .image{
+   
+      max-width: 43vw;
+       height: auto
+        }
+  }
+
+  
+  @media (max-width:500px) {
+    .video-container{
+     
+      height: 20vh;  
+    }
+    .image-container{
+      position: absolute;
+      top: 12%; 
+     left: 9%; 
+     
+     z-index: 1;
+     max-width: 100%;
+     
+     height: auto 
+    }
+    .image{
+   
+      max-width: 38vw;
+       height: auto
+        }
+  }
+  @media (max-height:500px) {
+    .video-container{
+     
+      height: 100vh;
+     
+    }
+    
+
+  }
+
+  @media (min-width: 500px) and (max-width: 700px)  {
+    .video-container{
+     
+      height: 20vh;  
+    }
+    .image-container{
+      position: absolute;
+      top: -14%; 
+     left: 5%; 
+     
+     z-index: 1;
+     max-width: 100%;
+     
+     height: auto 
+    }
+    .image{
+   
+      max-width: 43vw;
+       height: auto
+        }
+  }
