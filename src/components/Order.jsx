@@ -20,12 +20,13 @@ export default function Orders() {
     useEffect(() => {
         const role = Cookies.get('userRole');
         const token = Cookies.get('authToken');
+       
         if (token) {
             setAuthToken(token);
-            console.log(authToken, "authTokenorder");
+            // console.log(authToken, "authTokenorder");
         }
         setUserRole(role);
-        setLoading(false);
+        // setLoading(false);
         // console.log("role order>>>>>>>>>>", role);
 
     }, [authToken, setUserRole]);
@@ -71,14 +72,21 @@ export default function Orders() {
 
     useEffect(() => {
         const fetchOrders = async () => {
+            setLoading(true)
+            console.log(loading,"order");
+            
             try {
                 const response = await getOrders();
                 if (Array.isArray(response.data)) {
                     setOrders(response.data);
                     // console.log(response.data, "responseLLLLLLLLLLL");
+                   
                 }
             } catch (error) {
                 console.error('Error fetching orders:', error);
+            }
+            finally{
+                setLoading(false)
             }
         };
 
@@ -228,7 +236,16 @@ export default function Orders() {
             });
         }
     };
+
+    if (loading) {
+        return <Typography variant="h5" align="center" gutterBottom sx={{ marginTop: '10px' }}>
+          Loading...
+        </Typography>;
+      }
+   
     if (!orders || orders.length === 0) {
+        console.log(orders,"orders");
+        
         return <Typography variant='h6' textAlign='center' marginTop='10px'>No orders available</Typography>;
     }
 

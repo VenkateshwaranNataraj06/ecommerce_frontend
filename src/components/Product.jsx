@@ -266,7 +266,15 @@ export default function Product() {
     }, {});
 
 
-
+    if (loading) {
+        return <Typography variant="h5" align="center" gutterBottom sx={{ marginTop: '10px' }}>
+          Loading...
+        </Typography>;
+      }
+      if (products.length===0) {
+        return <Typography variant="h5" align="center" gutterBottom sx={{ marginTop: '10px' }}>
+          No Products Available      </Typography>;
+      }
 
 
 
@@ -317,7 +325,7 @@ export default function Product() {
                 </Button>
                 {showAddProductForm && (
                     <>
-                        <div className="fixed top-0 insert-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-50 z-10">
+                        <div className="static top-0 insert-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-50 z-10">
 
 
                             <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full ">

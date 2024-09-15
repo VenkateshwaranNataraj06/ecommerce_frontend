@@ -156,7 +156,15 @@ export default function CategoryAdd() {
             ]
         });
     };
-
+    if (loading) {
+        return <Typography variant="h5" align="center" gutterBottom sx={{ marginTop: '10px' }}>
+          Loading...
+        </Typography>;
+      }
+      if (categories.length===0) {
+        return <Typography variant="h5" align="center" gutterBottom sx={{ marginTop: '10px' }}>
+          No Users Available      </Typography>;
+      }
 
 
     return (

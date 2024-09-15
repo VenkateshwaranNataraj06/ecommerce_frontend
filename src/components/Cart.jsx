@@ -24,16 +24,16 @@ export default function Cart () {
 
   useEffect(() => {
     const isPageRefreshed = sessionStorage.getItem('isPageRefreshed');
-    console.log(isPageRefreshed, "isPageRefreshedPKJJJJJJJJJ");
+    console.log(isPageRefreshed, "isPageRefreshed");
 
     if (isPageRefreshed) {
 
       const fetchProductLocal = async () => {
-        console.log("fetch.......response.data,", authToken);
+        // console.log("fetch.......response.data,", authToken);
         try {
 
           const productlocalitems = JSON.parse(localStorage.getItem('productlocal')) || [];
-          console.log(productlocalitems, "productlocalitemsPPPPPPPPPPPPPPPPPP");
+          // console.log(productlocalitems, "productlocalitemsPPPPPPPPPPPPPPPPPP");
           setProducts(productlocalitems)
 
         }
@@ -56,7 +56,7 @@ export default function Cart () {
   useEffect(() => {
     const storedToken = Cookies.get('authToken');
     if (storedToken) {
-      console.log('Stored Token:', storedToken);
+      // console.log('Stored Token:', storedToken);
       setAuthToken(storedToken);
     } else {
       console.log('No token found');
@@ -66,16 +66,17 @@ export default function Cart () {
 
   useEffect(() => {
     const fetchCart = async () => {
+      setLoading(true);
       try {
-        console.log(authToken, "authTokenauthTokenauthToken");
+        // console.log(authToken, "authTokenauthTokenauthToken");
 
         if (authToken) {
           const response = await getCarts();
-          console.log(response.data, "fetch.......");
+          // console.log(response.data, "fetch.......");
 
           if (response.data && typeof response.data === 'object') {
             setCart(response.data[0]);
-            console.log(response.data[0].items.length, "response.data[0].items.length");
+            // console.log(response.data[0].items.length, "response.data[0].items.length");
             setCartlength(response.data[0].items.length)
 
           } else {
@@ -90,6 +91,9 @@ export default function Cart () {
 
       } catch (error) {
         console.error('Error fetching cart data:', error.response?.data?.message || error.message);
+      }
+      finally{
+        setLoading(false)
       }
     };
    fetchCart();
@@ -174,7 +178,13 @@ export default function Cart () {
     setProductDetails(produtID)
     navigate('/productdetails')
   }
-  console.log(products, "products");
+  // console.log(products, "products");
+
+  if (loading) {
+    return <Typography variant="h5" align="center" gutterBottom sx={{ marginTop: '10px' }}>
+      Loading...
+    </Typography>;
+  }
   return (
 
     <>

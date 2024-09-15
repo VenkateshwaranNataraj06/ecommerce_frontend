@@ -101,13 +101,16 @@ export default function CategoriesGroup() {
 
   }, [authToken]);
 
-
+if(userRole==='admin')
+{
+  navigate('/adminhome')
+}
 
   return (
     <>
 
       <Banner />
-      <Container className='mt-10'>
+   <Container className='mt-10'>
         <Typography variant="h3" align="center" gutterBottom sx={{
           marginBottom: '40px',
           fontWeight: '700',
@@ -207,6 +210,7 @@ export default function CategoriesGroup() {
           ))}
         </Grid>
       </Container>
+
       <div className="App text-center p-4">
         <ScrollableImage />
       </div>

@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 // import ImageZoom from './ImageZoom';
 
-
+import Cookies from 'js-cookie';
 
 const MovableImage = styled('img')({
   width: '40%',
@@ -50,9 +50,14 @@ export default function ProductDetails ()  {
   const [success, setSuccess] = useState('');
   const [showAddProductForm, setShowAddProductForm] = useState(false);
   const navigate = useNavigate();
-  const { authToken } = useContext(AuthContext)
+  const { authToken,setAuthToken } = useContext(AuthContext)
 
+  useEffect(()=>{
+    const token= Cookies.get('authToken');
+  // console.log( " const token= Cookies.get('authToken');",token);
+  setAuthToken(token);
 
+  },[])
 
   useEffect(() => {
     const isPageRefreshed = sessionStorage.getItem('isPageRefreshed');
@@ -81,7 +86,10 @@ export default function ProductDetails ()  {
 
       const fetchCart = async () => {
         try {
-          if (authToken) {
+          const token= Cookies.get('authToken');
+
+       
+          if (token) {
             const response = await getCarts();
             // console.log(response.data, "fetch.......");
 

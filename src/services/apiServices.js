@@ -4,7 +4,7 @@ import axios from 'axios';
 const API = 'https://ecommerce-backend-5y1u.onrender.com';
 const getAuthToken = () => {
     const token = Cookies.get('authToken');
-    console.log(token, "token");
+    // console.log(token, "token");
     return token;
 };
 

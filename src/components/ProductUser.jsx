@@ -44,13 +44,20 @@ export default function ProductUser() {
     const [open, setOpen] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
-    const token= Cookies.get('authToken');
-    console.log( " const token= Cookies.get('authToken');",token);
+    const [active, setActive] = useState(false);
+
+
+    useEffect(()=>{
+      const token= Cookies.get('authToken');
+    // console.log( " const token= Cookies.get('authToken');",token);
     setAuthToken(token);
+
+    },[])
+    
   // const [filteredProducts, setFilteredProducts] = useState(products);
   // const [filter,  setFilter]=useState(false)
   // console.log(filteredProducts," setFilteredProducts");
-  const [active, setActive] = useState(false)
+
     const handleClickOpen = (image) => {
       setSelectedImage(image);
       setOpen(true);
@@ -67,7 +74,7 @@ useEffect(() => {
 
     const fetchCart = async () => {
       try {
-        console.log("product cart user,",authToken);
+        // console.log("product cart user,",authToken);
         
         if(authToken ){
           const response = await getCarts();
@@ -133,7 +140,11 @@ useEffect(() => {
         Loading...
       </Typography>;
     }
- ;
+    if (products.length===0) {
+      return <Typography variant="h5" align="center" gutterBottom sx={{ marginTop: '10px' }}>
+        No Products Available      </Typography>;
+    }
+ 
 
     const handleAddToCart = async (productId, price) => {
               if (authToken) {
@@ -186,8 +197,8 @@ useEffect(() => {
     localStorage.setItem('prodid',produtID)
    navigate('/productdetails')
   }
-  console.log("cat",categories);
-  console.log();
+  // console.log("cat",categories);
+
   
   const handleClick = () => {
     setActive(!active);

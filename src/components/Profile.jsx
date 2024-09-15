@@ -7,10 +7,12 @@ import { getUsers, updateUser } from '../services/userService';
 import PersonIcon from '@mui/icons-material/Person';
 import AuthContext from '../context/AuthContext';
 import Cookies from 'js-cookie';
+import { getCarts } from '../services/cartServices';
+import ProductContext from '../context/ProductContext';
 
 export default function  Profile  ()  {
   const [isEditing, setIsEditing] = useState(false);
-  const {authToken, setAuthToken,userRole} = useContext(AuthContext)
+  const {authToken, setAuthToken,userRole,setUserRole} = useContext(AuthContext)
   const [userDetails, setUserDetails] = useState({
     username: '',
     firstname: '',
@@ -18,22 +20,36 @@ export default function  Profile  ()  {
     email: '',
     phonenumber:''
   });
-console.log(authToken,"authLLLLLLLLLLLLL");
-
+// console.log(authToken,"authLLLLLLLLLLLLL");
+const { setCartlength, setCart, } = useContext(ProductContext)
 const usermail =Cookies.get('useremail');
-console.log(usermail,"usermaiusermais");
+// console.log(usermail,"usermaiusermais");
+useEffect(() => {
+  const role = Cookies.get('userRole');
+  const token = Cookies.get('authToken');
+ 
+  if (token) {
+      setAuthToken(token);
+      // console.log(authToken, "authTokenorder");
+  }
+  setUserRole(role);
+  setLoading(false);
+  // console.log("role order>>>>>>>>>>", role);
 
+}, [authToken, setUserRole]);
 
   const [open, setOpen] = useState(false);
   const [editedDetails, setEditedDetails] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const response = await getUsers();
-        console.log((response.data,"response.data[0]>>>>>>>>>>>>"));
+        // console.log((response.data,"response.data[0]>>>>>>>>>>>>"));
         if (Array.isArray(response.data) && response.data.length > 0) {
 
           if (userRole === 'admin') {
@@ -42,11 +58,11 @@ console.log(usermail,"usermaiusermais");
             const details = response.data.filter(user => user.email === usermail)
           
             if (details.length > 0) {
-              console.log("Filtered user details:", details);
+              // console.log("Filtered user details:", details);
 
               setUserDetails(details[0]);
           } else {
-              console.log("No users found with the email:", usermail);
+              console.log("No users found with the email:");
           }
 
           }
@@ -56,7 +72,7 @@ console.log(usermail,"usermaiusermais");
           }
 
          
-        console.log( response.data );
+        // console.log( response.data );
         
           
           
@@ -64,14 +80,50 @@ console.log(usermail,"usermaiusermais");
           console.error('Unexpected data format or empty array');
         }
       } catch (error) {
-        console.error('Error fetching user data:', error);
+        console.error('Error fetching user data:');
       }
     };
 
     fetchUserData();
   }, []);
-console.log(userDetails,"userdetailsssssssssssssssssss");
+// console.log(userDetails,"userdetailsssssssssssssssssss");
+  useEffect(() => {
+        const isPageRefreshed = sessionStorage.getItem('isPageRefreshed');
 
+        if (isPageRefreshed) {
+
+            const fetchCart = async () => {
+                // console.log("fetch.......response.data,", authToken, userRole, "}");
+                try {
+                    if (userRole !== 'admin') {
+                        const response = await getCarts();
+                        // console.log(response.data, "fetch.......");
+                        if (response.data && typeof response.data === 'object') {
+                            setCart(response.data[0]);
+                            // console.log(response.data[0].items.length, "response.data[0].items.length");
+                            setCartlength(response.data[0].items.length)
+
+                        } else {
+                            console.log('Unexpected data format');
+                        }
+
+                    }
+
+
+                } catch (error) {
+                    console.error('Error fetching cart data:', error.response?.data?.message || error.message);
+                }
+            };
+            fetchCart();
+            console.log('Page was refreshed');
+        } else {
+            console.log('Initial page load');
+        }
+        sessionStorage.setItem('isPageRefreshed', 'true');
+        return () => {
+            sessionStorage.removeItem('isPageRefreshed');
+        };
+    }, []);
 
 
 const handleEditClick = (product) => {
@@ -255,7 +307,7 @@ if (isInvalid) {
               onChange={(e) => {
                 const file = e.target.files[0]; 
                 if (file) {
-                  console.log(file); 
+                  // console.log(file); 
 
                   setEditedDetails(prev => ({
                     ...prev,

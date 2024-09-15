@@ -4,10 +4,11 @@ import { deleteUser, getUsers, updateUser } from '../services/userService';
 import UserContext from '../context/UserContext';
 import AuthContext from '../context/AuthContext';
 import {
-  Container, Grid, Card, CardContent, CardMedia, Typography, TextField, Paper, Dialog, DialogContent, IconButton,
+  Container, Grid, Card, CardContent, CardMedia, Typography, TextField, Divider, Paper, Dialog, DialogContent, IconButton,
   Button, CircularProgress, Snackbar, Alert, Box, InputAdornment, Link
 } from '@mui/material';
 import { confirmAlert } from 'react-confirm-alert';
+import PeopleIcon from '@mui/icons-material/People';
 
 export default function User() {
   const { users, setUsers } = useContext(UserContext);
@@ -23,12 +24,13 @@ export default function User() {
   const [formData, setFormData] = useState({ ...users });
   useEffect(() => {
     const fetchUsers = async () => {
+      setLoading(true)
       try {
         if (authToken) {
           const response = await getUsers();
           if (Array.isArray(response.data)) {
             setUsers(response.data);
-            console.log(response.data);
+            // console.log(response.data);
             
           } else {
             setError('Unexpected data format');
@@ -36,6 +38,9 @@ export default function User() {
         }
       } catch (error) {
         setError('Error fetching data');
+      }
+      finally{
+        setLoading(false)
       }
     };
 
@@ -113,6 +118,16 @@ export default function User() {
       setError('Failed to update user');
     }
   };
+
+  if (loading) {
+    return <Typography variant="h5" align="center" gutterBottom sx={{ marginTop: '10px' }}>
+      Loading...
+    </Typography>;
+  }
+  if (users.length===0) {
+    return <Typography variant="h5" align="center" gutterBottom sx={{ marginTop: '10px' }}>
+      No Users Available      </Typography>;
+  }
   return (
     <>
     <div className='mb-10'>
@@ -138,10 +153,28 @@ export default function User() {
         </Alert>
       </Snackbar>
       <div className="w-full mt-4">
-      <h1 className="text-3xl font-semibold mb-4 text-center">Users</h1>
+      {/* <h1 className="text-3xl font-semibold mb-4 text-center">Users</h1> */}
+      <div className="flex items-center justify-center  p-4">
+      <Card className="w-full max-w-sm shadow-lg">
+        <CardContent>
+          <Typography variant="h5" component="div" gutterBottom textAlign='center'>
+            <PeopleIcon className="align-middle mr-2" />
+            User Summary
+          </Typography>
+          <Divider className="my-2" />
+          <Typography variant="h6" component="div" textAlign='center'>
+            Total Users: <strong>{users.length}</strong>
+          </Typography>
+        </CardContent>
+      </Card>
+    </div>
+      
       <div className="overflow-x-auto">
+        
       <table className="mx-auto w-[95%] bg-white shadow-md rounded-lg text-center  min-w-max">
+    
         <thead>
+          
           <tr>
             <th className="p-2 border">ID</th>
             <th className="p-2 border">Email</th>
@@ -151,6 +184,7 @@ export default function User() {
           </tr>
         </thead>
         <tbody>
+          
           {users.map(user => (
             <tr key={user._id} >
               <td className="p-2 border ">{user._id}</td>
@@ -245,9 +279,19 @@ export default function User() {
               </td> */}
             </tr>
           ))}
+
+
+
         </tbody>
+
+
+        
       </table>
+      
+
       </div>
+
+     
       </div>
       </div>
 
