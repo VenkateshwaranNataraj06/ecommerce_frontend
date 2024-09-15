@@ -5,8 +5,8 @@ import {
 } from '@mui/material';
 import ProductContext from '../context/ProductContext';
 import CategoriesContext from '../context/CategoryContext';
-import { getProducts, updateProducts, deleteProducts, createProducts,  addCategory } from '../services/apiServices';
-import { getCarts, deleteCarts, createCarts } from '../services/cartServices';
+import { getProducts } from '../services/apiServices';
+import { createCarts } from '../services/cartServices';
 import { createOrders } from '../services/orderServices';
 import { getCategories } from '../services/categoryServices';
 
@@ -17,19 +17,17 @@ export default function CategoriesGroup() {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
   
-
     useEffect(() => {
         const fetchProductsAndCategories = async () => {
             setLoading(true);
             try {
-              console.log("lkjkgs357900");
-              console.log(products);
-              
+            //   console.log("lkjkgs357900");
+            //   console.log(products);
             if(products.length === 0 || categories.length === 0)
             {
                 const productsResponse = await getProducts();
                 const categoriesResponse = await getCategories();
-  console.log(categoriesResponse,"jtghjk");
+//   console.log(categoriesResponse,"jtghjk");
   
                 if (Array.isArray(productsResponse.data)) {
                     setProducts(productsResponse.data);
@@ -40,9 +38,9 @@ export default function CategoriesGroup() {
                 }
             }
             } catch (error) {
-              console.log(error);
+            //   console.log(error);
               
-                setError('Error fetching data');
+                setError(error?.response?.data?.message,'Error fetching data');
             } finally {
                 setLoading(false);
             }
@@ -50,16 +48,12 @@ export default function CategoriesGroup() {
   
         fetchProductsAndCategories();
     }, []);
-  
-  
      
-  
-
     const handleAddToCart = async (productId, price) => {
-        // This function should be adapted to work with your existing cart logic
+     
         try {
             setLoading(true);
-            await createCarts(productId, price); // Assuming this function is defined elsewhere
+            await createCarts(productId, price); 
             setSuccess('Product added to cart successfully');
         } catch (error) {
             setError('Error adding product to cart');
@@ -69,10 +63,9 @@ export default function CategoriesGroup() {
     };
 
     const handleBuyNow = async (product) => {
-        // This function should be adapted to work with your existing order logic
-        setLoading(true);
+          setLoading(true);
         try {
-            await createOrders(product); // Assuming this function is defined elsewhere
+            await createOrders(product); 
             setSuccess('Order placed successfully');
         } catch (error) {
             setError('Error placing order');
@@ -81,16 +74,12 @@ export default function CategoriesGroup() {
         }
     };
 
-
         const groupedProducts = categories.reduce((acc, category) => {
             acc[category._id] = filteredProducts.filter(product => product?.category?._id === category?._id);
             return acc;
         }, {});
-   
       
-   
-
-  
+ 
     return (
         <>
             <Container>

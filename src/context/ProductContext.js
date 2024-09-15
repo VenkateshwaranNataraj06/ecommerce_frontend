@@ -20,5 +20,5 @@ export const ProductProvider = ({ children }) => {
   );
 };
 
-// export const useCategories = () => React.useContext(;
+
 export default ProductContext;

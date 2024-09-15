@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
 import axios from 'axios';
-const API ='http://localhost:4000'
+const API ='https://ecommerce-backend-5y1u.onrender.com'
 const getAuthToken = () => {
     const token = Cookies.get('authToken');
     console.log(token, "token");
@@ -11,7 +11,7 @@ const getAuthToken = () => {
 
 export const createWhislist= async (productId,price) => {
     try {
-        console.log(productId,"product");
+        // console.log(productId,"product");
         
         const token = getAuthToken();
         console.log( token,">>>> token");
@@ -38,10 +38,10 @@ export const createWhislist= async (productId,price) => {
 };
 export const getWhislist= async () => {
     try {
-        console.log("whislist...");
+        // console.log("whislist...");
         
         const token = getAuthToken();
-        console.log("whislist...",token);
+        // console.log("whislist...",token);
 
         const response = await axios.get(`${API}/whislist`,{
             headers: {
@@ -59,7 +59,7 @@ export const getWhislist= async () => {
 };
 export const deleteWhislist= async (productId) => {
     try {
-        console.log(productId,"productdelete");
+        // console.log(productId,"productdelete");
         
         const token = getAuthToken();
         const response = await axios.delete(`${API}/whislist/${productId}`, {
@@ -68,7 +68,7 @@ export const deleteWhislist= async (productId) => {
                 'Content-Type': 'application/json'
             }
         });
-        console.log(response,"response............");
+       // console.log(response,"response............");
       
         return response;
     } 

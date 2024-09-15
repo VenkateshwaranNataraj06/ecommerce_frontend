@@ -1,18 +1,7 @@
-
-
-
 import Cookies from 'js-cookie';
-
 import axios from 'axios';
 
-const API = 'http://localhost:4000'
-
-// const getAuthToken = () => {
-//     const token=localStorage.getItem('authToken');
-//     console.log(token,"token");
-    
-//     return token
-// };
+const API = 'https://ecommerce-backend-5y1u.onrender.com'
 
 const getAuthToken = () => {
     const token = Cookies.get('authToken');
@@ -20,17 +9,11 @@ const getAuthToken = () => {
     return token;
 };
 
-
-
-
-
 export const createCarts= async (productId,price) => {
     try {
         console.log(productId,"product");
-        
-        const token = getAuthToken();
-        console.log( token,">>>> token");
-        
+                const token = getAuthToken();
+        // console.log( token,">>>> token");        
         const response = await axios.post(`${API}/carts`, {
           
             items: [
@@ -53,28 +36,25 @@ export const createCarts= async (productId,price) => {
 };
 export const getCarts= async () => {
     try {
-        console.log("cart...");
-        
-        const token = getAuthToken();
-        console.log("cart...",token);
-
+        // console.log("cart...");
+           const token = getAuthToken();
+        // console.log("cart...",token);
         const response = await axios.get(`${API}/carts`,{
             headers: {
                 'Authorization': token,
                 'Content-Type': 'application/json'
             }
         });
-        console.log(response,"cart............");
+        // console.log(response,"cart............");
         return response;
     } catch (error) {
-        console.log("erroor",error.response.data.message);
-        
-        throw error;
+        // console.log("erroor",error.response.data.message);
+             throw error;
     }
 };
 export const deleteCarts= async (productId) => {
     try {
-        console.log(productId,"product");
+        //console.log(productId,"product");
         
         const token = getAuthToken();
         const response = await axios.delete(`${API}/carts/${productId}`, {
@@ -83,7 +63,7 @@ export const deleteCarts= async (productId) => {
                 'Content-Type': 'application/json'
             }
         });
-        console.log(response,"response............");
+       // console.log(response,"response............");
       
         return response;
     } 

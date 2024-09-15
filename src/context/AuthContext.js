@@ -1,9 +1,7 @@
 import React, { createContext, useState ,useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';
-
 import { checkLogin } from '../services/userService';
 
 const AuthContext = createContext();
@@ -15,19 +13,15 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const storedToken =Cookies.get('authToken');
-    if (storedToken) {
-         
+    if (storedToken) {         
             setAuthToken(storedToken);
-            console.log(authToken,"authTokenauthcontext");
-            
-     
-  
+            // console.log(authToken,"authTokenauthcontext")      
+      
     }
 
     const handleStorageChange = (event) => {
-      console.log(event.key,"event key","event.newValue",event.newValue);
-      
-      if (event.key === 'authToken' && !event.newValue) {
+      // console.log(event.key,"event key","event.newValue",event.newValue);
+            if (event.key === 'authToken' && !event.newValue) {
         setAuthToken(false);
         window.removeEventListener('storage', handleStorageChange);
         navigate('/login');
@@ -35,43 +29,33 @@ export const AuthProvider = ({ children }) => {
     };
 
     window.addEventListener('storage', handleStorageChange);
-  }, []);
+  }, [navigate]);
 
   const login = async (credentials) => {
-    console.log("login>>>>>>");
+    // console.log("login>>>>>>");
     
     try {
       const response = await checkLogin(credentials);
       const { token ,username,useremail} = response.data;
       setAuthToken(token);
       const decodedToken = jwtDecode(token);
-  console.log(response.data,"response.data;loginJJJJJJJJJ");
-  
-     
-      const userRole = decodedToken.role; 
-    
-      console.log('User Role:', userRole);
+  // console.log(response.data,"response.data;loginJJJJJJJJJ");
+       const userRole = decodedToken.role; 
+      //  console.log('User Role:', userRole);
 
       Cookies.set('authToken', token, { expires: 1 / 24 });
       Cookies.set('userRole', userRole, { expires: 1 / 24 });
-
       Cookies.set('username', username, { expires: 1 / 24 });
-      Cookies.set('useremail',useremail, { expires: 1 / 24 });
-  
-      
-      if(userRole==='admin')
-      {
-      console.log(userRole,"userRoleuserRoleuserRole");
-      
-        navigate('/adminproduct')
-        
-      }
-else{
-  console.log(userRole,"/homeuserRoleuserRoleuserRole");
-  navigate('/'); 
-}
-     
+      Cookies.set('useremail',useremail, { expires: 1 / 24 });    
+      if (userRole === 'admin') {
+        // console.log(userRole,"userRoleuserRoleuserRole");
+        navigate('/adminhome')
 
+      }
+      else {
+        console.log(userRole, "/homeuserRoleuserRoleuserRole");
+        navigate('/');
+      }
 
 
     } catch (error) {

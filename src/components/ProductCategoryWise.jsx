@@ -1,5 +1,4 @@
 
-
 import React, { useContext, useEffect, useState, useRef } from 'react';
 import { getProducts, updateProducts, deleteProducts, createOrders, createProducts, } from '../services/apiServices';
 import { createCarts, getCarts } from '../services/cartServices';
@@ -11,23 +10,17 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import { styled } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close';
-
-import Carousel from './Carousel';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { useNavigate } from 'react-router-dom';
-import ScrollableImage from './ScrollImage';
 import ProductContext from '../context/ProductContext';
 import CategoriesContext from '../context/CategoryContext';
 import AuthContext from '../context/AuthContext';
 import '../components/css/banner.css'
-import vid from './video/loginbg3.mov'
+
 
 export default function ProductCategoryWise() {
-  // useEffect(() => {
 
-  //     localStorage.clear();
-  // }, []);
   const { products, setProducts, orderProductId, setOrderProductId, cartlength, cart, setCart, setCartlength, quantity, setQuantity, productDetailsId, setProductDetails } = useContext(ProductContext)
   const { categories, setCategories, cid, setCid } = useContext(CategoriesContext);
   const [showAddCategoryForm, setShowAddCategoryForm] = useState(false);
@@ -47,10 +40,11 @@ export default function ProductCategoryWise() {
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [filter, setFilter] = useState(false)
-  console.log(cid, "cidL:LLLLLLLLLLLLLLLLLLLLLLLL");
+  // console.log(cid, "cidL:LLLLLLLLLLLLLLLLLLLLLLLL");
   const categoryId = (localStorage.getItem('categoryid'));
-  console.log("productlocalitemsPPPPPPPPPPPPPPPPPP", categoryId);
+  // console.log("productlocalitemsPPPPPPPPPPPPPPPPPP", categoryId);
   setCid(categoryId)
+
   const handleClickOpen = (image) => {
     setSelectedImage(image);
     setOpen(true);
@@ -59,47 +53,7 @@ export default function ProductCategoryWise() {
   const handleClose = () => {
     setOpen(false);
     setSelectedImage(null);
-  };
-
-  // useEffect(() => {
-
-  //   const fetchCart = async () => {
-  //     try {
-  //       if (authToken) {
-  //         const response = await getCarts();
-  //         console.log(response.data, "fetch.......");
-
-
-  //         if (response.data && typeof response.data === 'object') {
-  //           setCart(response.data[0]); 
-
-
-  //           console.log(response.data[0].items.length, "response.data[0].items.length");
-  //           setCartlength(response.data[0].items.length)
-
-  //         } else {
-  //           console.log('Unexpected data format');
-  //         }
-
-  //       }
-  //       else {
-  //         const localCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-  //         setCart(localCartItems);
-  //         setCartlength(localCartItems.length);
-  //       }
-
-  //     } catch (error) {
-  //       console.error('Error fetching cart data:', error.response?.data?.message || error.message);
-  //     }
-  //   };
-
-  //   fetchCart();
-
-
-  // }, []);
-
-
-
+  }
 
   useEffect(() => {
     const isPageRefreshed = sessionStorage.getItem('isPageRefreshed');
@@ -108,23 +62,16 @@ export default function ProductCategoryWise() {
     if (isPageRefreshed) {
 
       const fetchProductLocal = async () => {
-        console.log("fetch.......response.data,", authToken);
+        // console.log("fetch.......response.data,", authToken);
         try {
 
           const productlocalitems = JSON.parse(localStorage.getItem('productlocal')) || [];
         
-          console.log(productlocalitems, "productlocalitemsPPPPPPPPPPPPPPPPPP", categoryId);
+          // console.log(productlocalitems, "productlocalitemsPPPPPPPPPPPPPPPPPP", categoryId);
        
           setProducts(productlocalitems)
 
         }
-
-
-
-
-
-
-
         catch (error) {
           console.log('Error fetching cart data:', error);
         }
@@ -132,20 +79,17 @@ export default function ProductCategoryWise() {
 
       fetchProductLocal();
 
-
-      
+     
     const fetchCart = async () => {
       try {
         if (authToken) {
           const response = await getCarts();
-          console.log(response.data, "fetch.......");
+          // console.log(response.data, "fetch.......");
 
 
           if (response.data && typeof response.data === 'object') {
             setCart(response.data[0]); 
-
-
-            console.log(response.data[0].items.length, "response.data[0].items.length");
+            // console.log(response.data[0].items.length, "response.data[0].items.length");
             setCartlength(response.data[0].items.length)
 
           } else {
@@ -184,35 +128,11 @@ export default function ProductCategoryWise() {
 
 
 
-  // useEffect(() => {
-  //     const fetchProductsAndCategories = async () => {
-  //         setLoading(true);
-  //         try {
-  //             const productsResponse = await getProducts();
-  //             const categoriesResponse = await getCategories();
-
-  //             if (Array.isArray(productsResponse.data)) {
-  //                 setProducts(productsResponse.data);
-  //                 setFilteredProducts(productsResponse.data);
-  //                 setCategories(categoriesResponse.data);
-  //             } else {
-  //                 setError('Unexpected data format');
-  //             }
-  //         } catch (error) {
-  //             setError('Error fetching data');
-  //         } finally {
-  //             setLoading(false);
-  //         }
-  //     };
-
-  //     fetchProductsAndCategories();
-  // }, []);
-
   const handleSearchChange = (event) => {
     setFilter(true)
     setSearchQuery(event.target.value);
     if (event.target.value.trim() === '') {
-      // When the search query is empty
+   
       setFilter(false);
 
     }
@@ -232,12 +152,12 @@ export default function ProductCategoryWise() {
       try {
         const response = await createCarts(productId, price);
         setCartlength(response.data.items.length)
-        console.log(response.data.items.length, "response.data[0].items.length");
-        console.log(response);
+        // console.log(response.data.items.length, "response.data[0].items.length");
+      //  console.log(response);
 
         setSuccess('Product added to cart successfully');
       } catch (error) {
-        console.log(error?.response?.data?.message, "cart error");
+       // console.log(error?.response?.data?.message, "cart error");
         setError('Error adding product to cart');
       }
     } else {
@@ -254,16 +174,11 @@ export default function ProductCategoryWise() {
     setLoading(true);
     try {
       if (authToken) {
-        console.log("try block of handleBuyNow", productId);
+        //console.log("try block of handleBuyNow", productId);
         setOrderProductId(productId)
-        console.log("orderform");
+      //  console.log("orderform");
         setOrderProductId(productId);
-
-
-
-
         navigate('/orderform')
-
         setSuccess('Order placed successfully');
       }
       else {
@@ -271,7 +186,7 @@ export default function ProductCategoryWise() {
 
       }
     } catch (error) {
-      console.log(error);
+     // console.log(error);
 
       setError('Error placing order', error);
     } finally {
@@ -284,7 +199,7 @@ export default function ProductCategoryWise() {
     localStorage.setItem('prodid', produtID)
     navigate('/productdetails')
   }
-  console.log("cat", categories, products);
+  //console.log("cat", categories, products);
 
   // if (products.length===0) {
   //   navigate('/')
@@ -293,24 +208,7 @@ export default function ProductCategoryWise() {
 
   return (
     <>
-      <div className='mb-10 mt-10 '  >
-
-        {/* <TextField
-        variant="outlined"
-        placeholder="Search Products..."
-        value={searchQuery}
-        onChange={handleSearchChange}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <IconButton onClick={() => handleSearchChange({ target: { value: searchQuery } })}>
-                <SearchIcon />
-              </IconButton>
-            </InputAdornment>
-          ),
-        }}
-        style={{ marginBottom: '20px',marginTop:'20px',padding:'10px', width: '100%' }}
-      /> */}
+      <div className='mb-10 mt-10 '  >      
         {loading && <CircularProgress color="inherit" />}
         <Snackbar
           open={!!error}
@@ -322,46 +220,6 @@ export default function ProductCategoryWise() {
             {error}
           </Alert>
         </Snackbar>
-
-
-        {/* {filter &&  
- <Container className='mt-4'>
- <Grid container spacing={2} >
-    {products.filter((fprod)=>fprod?.category?._id ===cid).map(product => (
-          <Grid item xs={12} sm={6} md={4} lg={3} key={product._id}>
-            <Card>
-              <CardMedia
-                component="img"
-                style={{ height: '200px', width: '100%', objectFit: 'contain', paddingTop: '10px' }}
-                image={product.images[0] || "https://via.placeholder.com/150"}
-                alt={product.name}
-              />
-              <CardContent>
-                <Typography variant="h6" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', marginBottom: '8px',textalign: 'center' }}>
-                  {product.description}
-                </Typography>
-                <Typography variant="h6" style={{ textAlign: 'center', marginTop: '8px' }}>
-                  Price: ₹{product.price}
-                </Typography>
-                <Typography variant="h6" style={{ textAlign: 'center', marginTop: '8px' }}>
-                  Stock: {product.stock}
-                </Typography>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => handleAddToCart(product._id, product.price)}
-                  className="mt-2"
-                >
-                  Add to Cart
-                </Button>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
-      </Container>
-} */}
-
 
         {!filter && <Container >
           <Typography variant="h3" align="center" gutterBottom className="mt-4">
@@ -391,10 +249,7 @@ export default function ProductCategoryWise() {
 
           <Grid container spacing={2} className="mt-4">
             {products.filter((fprod) => fprod?.category?._id === cid).map(product => (
-              <Grid item xs={12} sm={6} md={4} lg={3} key={product._id}
-
-
-              >
+              <Grid item xs={12} sm={6} md={4} lg={3} key={product._id} >
                 <Card>
                   <CardMedia
                     component="img"
@@ -416,8 +271,6 @@ export default function ProductCategoryWise() {
                     onClick={() => handleProductDetailPage(product._id)}
                   />
                   <CardContent>
-
-
                     <>
                       <Box>
                         <Typography variant="h6" style={{

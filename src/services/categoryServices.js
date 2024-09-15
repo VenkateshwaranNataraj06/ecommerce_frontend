@@ -1,23 +1,18 @@
 import Cookies from 'js-cookie';
-
 import axios from 'axios';
 
-const API = 'http://localhost:4000'
-
-
+const API = 'https://ecommerce-backend-5y1u.onrender.com'
 
 const getAuthToken = () => {
     const token = Cookies.get('authToken');
-    console.log(token, "token");
+    // console.log(token, "token");
     return token;
 };
 
 
 export const getCategories = async () => {
-    console.log("categoriess/...get");
-        
+    // console.log("categoriess/...get");      
     const token = getAuthToken();
-
     const response = await axios.get(`${API}/category`,{
         headers: {
             'Authorization': token,
@@ -29,7 +24,7 @@ export const getCategories = async () => {
 };
 
 export const addCategory = async (category) => {
-    console.log("categoriess/...post");
+  //  console.log("categoriess/...post");
         
     const token = getAuthToken();
 
@@ -45,7 +40,7 @@ export const addCategory = async (category) => {
 
 export const updateCategory = async (id, updatedData) => {
     const token = getAuthToken();
-    console.log(token,"Category ");
+   // console.log(token,"Category ");
     
     const response = await axios.put(`${API}/category/${id}`, updatedData,{
         headers: {
@@ -58,7 +53,7 @@ export const updateCategory = async (id, updatedData) => {
 
 export const deleteCategory = async (id) => {
     const token = getAuthToken();
-    console.log(token,"Category ");
+   // console.log(token,"Category ");
     const response = await axios.delete(`${API}/category/${id}`,{
         headers: {
             'Authorization': token,

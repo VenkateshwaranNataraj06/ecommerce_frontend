@@ -6,8 +6,7 @@ import AuthContext from '../context/AuthContext';
 const PublicRoute = ({ element }) => {
     const { authToken,logout } =useContext(AuthContext)
     if (authToken) {
-        // logout();
-        return <Navigate to='/' />;
+      return <Navigate to='/' />;
     }
 
     return element;

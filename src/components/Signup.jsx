@@ -1,7 +1,4 @@
-
-
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { createUsers, getUsers} from '../services/userService';
 import { ToastContainer, toast } from 'react-toastify';
@@ -9,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import bgimg from '../image/bgsignup.png'
 
 
-const Signup = () => {
+export default function Signup() {
     const [formData, setFormData] = useState({
         firstname: '',
         lastname:'',
@@ -33,32 +30,6 @@ const Signup = () => {
     };
 
     const navigate = useNavigate(); 
-
-    // useEffect(() => {
-    //     const fetchUsers = async () => {
-    //         if (isErrorShown) return;
-    //         try {
-    //             const response = await getUsers() ;
-    //             if (Array.isArray(response.data)) {
-    //                 setUsers(response.data);
-    //             } else {
-    //                 console.error('Unexpected data format:', response.data);
-    //                 setError('Unexpected data format');
-    //                 setIsErrorPopupOpen(true);
-    //             }
-    //         } catch (error) {
-    //             console.error('Error fetching users:', error);
-    //             // setError('Error fetching users');
-    //             // setIsErrorPopupOpen(true);
-    //             if (!isErrorShown) {
-    //                 // toast.error('Error fetching users');
-    //                 setIsErrorShown(true);
-    //             }
-    //         }
-    //     };
-
-    //     fetchUsers();
-    // }, [isErrorShown]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -85,13 +56,6 @@ const Signup = () => {
             return;
         }
 
-        // const userExists = Users.some(user => formData.email === user.email);
-        // if (userExists) {
-        //     setError('User with this email already exists');
-        //     setIsErrorPopupOpen(true);
-        //     return;
-        // }
-
         try {
             const { confirmPassword, ...dataToSend } = formData;
             const response = await createUsers(dataToSend)
@@ -100,8 +64,8 @@ const Signup = () => {
           
           setTimeout(()=> navigate('/login'),1000) 
         } catch (error) {
-            console.log(error.message);
-            console.log(error.response?.data,"ugyg");
+            // console.log(error.message);
+            // console.log(error.response?.data,"ugyg");
             const errorMessage = error.response?.data?.message||error.response?.data?.Invalid || 'Signup failed';
             toast.error(errorMessage)
           
@@ -110,20 +74,13 @@ const Signup = () => {
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-green-50 via-blue-50 to-purple-100 "
-        style={{
-    
-            backgroundImage: `url(${bgimg})`,
-        
-           
-            backgroundRepeat: 'no-repeat',
-           
+        style={{    
+            backgroundImage: `url(${bgimg})`,                 
+            backgroundRepeat: 'no-repeat',           
           }}
         
         >
              <div  >
-    
-    
-     
   
             {/* <ToastContainer> */}
             <div className="bg-white p-10 rounded-lg shadow-lg w-full max-w-md border border-gray-200">
@@ -230,5 +187,4 @@ const Signup = () => {
     );
 };
 
-export default Signup;
 

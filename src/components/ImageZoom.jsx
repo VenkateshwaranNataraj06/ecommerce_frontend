@@ -1,4 +1,4 @@
-// ImageZoom.js
+
 import React from 'react';
 import ImageMagnify from 'react-image-magnify';
 import { useMediaQuery, useTheme } from '@mui/material';

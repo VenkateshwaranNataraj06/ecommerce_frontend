@@ -13,5 +13,5 @@ export const UserProvider = ({ children }) => {
   );
 };
 
-// export const useCategories = () => React.useContext(;
+
 export default  UserContext;

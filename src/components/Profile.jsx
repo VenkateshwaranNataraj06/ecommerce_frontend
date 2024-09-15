@@ -1,7 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-
-
-
 import { Card, CardContent, CardMedia, Typography, IconButton, Button, CircularProgress, Snackbar, Alert, Avatar, Tooltip, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -107,67 +104,32 @@ if (isInvalid) {
 
   try {
       
-
-          console.log(editedDetails, "(editingDetails.>>>>>>>>>>>>>>");
-
-
-          // if (Array.isArray(editedDetails.images) && editedDetails.images.length > 0) {
-
-          //     const imagesString = editedDetails.images[0];
-
-
-          //     editedDetails.images = imagesString.split(',');
-          // }
-
-
-          // console.log(editedDetails, "(updated newProduct with images array >>>>>>>>>>>>>")
-          // Handle URL-based image update
+          // console.log(editedDetails, "(editingDetails.>>>>>>>>>>>>>>");
           const response=await updateUser(editedDetails._id, editedDetails);
-          console.log(response);
+          // console.log(response);
        
           if (Array.isArray(response.data) && response.data.length > 0) {
             setUserDetails(response.data[0]); 
           
-            console.log((response,"response.data[0]"));
+            // console.log((response,"response.data[0]"));
             
           } else {
             console.error('Unexpected data format or empty array');
           }
           
-      setEditedDetails(userDetails._id === editedDetails._id ? editedDetails :userDetails)
-
-
-     
+      setEditedDetails(userDetails._id === editedDetails._id ? editedDetails :userDetails)   
       setSuccess('User updated successfully');
       // setIsEditing(false);
       handleCancelEdit();
   } catch (error) {
-    console.log(error);
+    // console.log(error);
+    // console.log(error?.response?.data?.message);
     
-      setError('Error updating User');
+      setError(error?.response?.data?.message||'Error updating user');
   } finally {
       setLoading(false);
   }
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-//////////////////////////////////////
-
-
-
-
-
 
 
   return (
@@ -289,15 +251,15 @@ if (isInvalid) {
           <label >Photo</label><br />
             <input
               type="file"
-              accept="image/*" // Optional: restricts file type to images
+              accept="image/*" 
               onChange={(e) => {
-                const file = e.target.files[0]; // Get the first selected file
+                const file = e.target.files[0]; 
                 if (file) {
-                  console.log(file); // Log the file for debugging
+                  console.log(file); 
 
                   setEditedDetails(prev => ({
                     ...prev,
-                    image: file // Store the single file
+                    image: file 
                   }));
                 }
               }}
@@ -309,21 +271,7 @@ if (isInvalid) {
           <Button onClick={handleUpdate }>Save</Button>
         </DialogActions>
       </Dialog>
-
-
             }
-
-
-
-
-
-
-
-
-
-
-
-
     </div>
   );
 };

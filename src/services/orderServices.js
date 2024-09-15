@@ -2,7 +2,7 @@ import Cookies from 'js-cookie';
 
 import axios from 'axios';
 
-const API = 'http://localhost:4000'
+const API = 'https://ecommerce-backend-5y1u.onrender.com'
 
 
 
@@ -14,10 +14,10 @@ const getAuthToken = () => {
 
 export const getOrders = async () => {
     try {
-console.log("oreder get");
+// console.log("oreder get");
 
         const token = getAuthToken();
-        console.log(token,"order");
+        // console.log(token,"order");
         
         const response = await axios.get(`${API}/orders`,{
             headers: {
@@ -34,7 +34,7 @@ console.log("oreder get");
 
 export const updateOrders= async (id, updatedData) => {
     const token = getAuthToken();
-    console.log(token,"order");
+    // console.log(token,"order");
     
     const response = await axios.put(`${API}/orders/${id}`, updatedData,{
         headers: {
@@ -47,7 +47,7 @@ export const updateOrders= async (id, updatedData) => {
 
 export const deleteOrders= async (id) => {
     const token = getAuthToken();
-    console.log(token,"order");
+    // console.log(token,"order");
     const response = await axios.delete(`${API}/orders/${id}`,{
         headers: {
             'Authorization': token,
@@ -62,7 +62,7 @@ export const deleteOrders= async (id) => {
 export const createOrders= async (orderData) => {
     try {
         const token = getAuthToken();
-        console.log(token,"order");
+        // console.log(token,"order");
         const response = await axios.post(`${API}/orders`, orderData,
             {
                 headers: {

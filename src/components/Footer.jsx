@@ -67,17 +67,7 @@ const Footer = () => {
           </Typography>
         </div>
       </Container>
-      {/* <footer className="bg-gray-900 text-white py-4">
-        <div className="container mx-auto text-center">
-          <p>&copy; 2024 MyStore. All rights reserved.</p>
-          <div className="mt-2">
-            <a href="#home" className="hover:underline">Home</a> | 
-            <a href="#products" className="hover:underline">Products</a> | 
-            <a href="#offers" className="hover:underline">Offers</a> | 
-            <a href="#contact" className="hover:underline">Contact</a>
-          </div>
-        </div>
-      </footer> */}
+    
     </footer>
     </>
   );

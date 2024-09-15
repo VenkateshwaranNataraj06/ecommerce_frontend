@@ -1,16 +1,7 @@
 import Cookies from 'js-cookie';
-
 import axios from 'axios';
 
-const API = 'http://localhost:4000';
-
-// const getAuthToken = () => {
-//     const token=localStorage.getItem('authToken');
-//     console.log(token,"token");
-    
-//     return token
-// };
-
+const API = 'https://ecommerce-backend-5y1u.onrender.com';
 const getAuthToken = () => {
     const token = Cookies.get('authToken');
     console.log(token, "token");
@@ -18,9 +9,8 @@ const getAuthToken = () => {
 };
 
 export const getProducts = async () => {
-    console.log(API,"APIIIIIIIIIIIIIIIIIIIIIIIi");
-    
-    return await axios.get(`${API}/products`);
+    // console.log(API,"APIIIIIIIIIIIIIIIIIIIIIIIi");
+     return await axios.get(`${API}/products`);
 };
 
 export const getProductsById = async (id) => {
@@ -38,7 +28,7 @@ export const createProducts = async (Products) => {
 };
 
 export const updateProducts = async (id, Products) => {
-    console.log(Products,"Prdoucts updateapiiiiiiiiiiiiii");
+    // console.log(Products,"Prdoucts updateapiiiiiiiiiiiiii");
     
     const token = getAuthToken();
     return await axios.put(`${API}/products/${id}`, Products,

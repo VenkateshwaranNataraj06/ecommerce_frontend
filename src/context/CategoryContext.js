@@ -13,20 +13,5 @@ export const CategoriesProvider = ({ children }) => {
   );
 };
 
-// export const useCategories = () => React.useContext(;
+
 export default CategoriesContext;
-
-
-// useMemo(() => ({
-//   authenticate,
-//   setCurrentSession,
-//   currentSession,
-//   logOut,
-//   pubData,
-//   errors,
-//   userData,
-//   getSession,
-//   setPubData,
-//   setErrors,
-//   renewToken,
-// }), [authenticate, setCurrentSession, currentSession, logOut, pubData, errors, userData, getSession, setPubData, setErrors, renewToken]);

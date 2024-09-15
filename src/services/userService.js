@@ -2,7 +2,7 @@ import Cookies from 'js-cookie';
 
 import axios from 'axios';
 
-const API = 'http://localhost:4000'
+const API = 'https://ecommerce-backend-5y1u.onrender.com'
 const getAuthToken = () => {
     const token = Cookies.get('authToken');
     console.log(token, "token");
@@ -25,7 +25,7 @@ export const checkLogin = async (credentials) => {
 export const getUsers = async () => {
     try {
         const token = getAuthToken();
-        console.log(token,"user");
+        // console.log(token,"user");
         const response = await axios.get(`${API}/users`,  {
             headers: {
                 'Authorization': token,
@@ -56,7 +56,7 @@ export const createUsers = async (dataToSend) => {
 
 export const updateUser= async (id, updatedData) => {
     const token = getAuthToken();
-    console.log(token,"users");
+    // console.log(token,"users");
     
     const response = await axios.put(`${API}/users/${id}`, updatedData,{
         headers: {
@@ -69,7 +69,7 @@ export const updateUser= async (id, updatedData) => {
 
 export const deleteUser= async (id) => {
     const token = getAuthToken();
-    console.log(token,"users");
+    // console.log(token,"users");
     const response = await axios.delete(`${API}/users/${id}`,{
         headers: {
             'Authorization': token,
