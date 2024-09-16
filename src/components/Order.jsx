@@ -320,7 +320,7 @@ export default function Orders() {
                                 {userRole === 'admin' && orders.map(order => (
                                     <tr key={order._id}>
                                         <td className="p-2 border text-center">{order?._id}</td>
-                                        <td className="p-2 border text-center">{order?.user?.username}</td>
+                                        <td className="p-2 border text-center"><span className='text-pink-500'>Name: </span> {order?.user?.username }<br/><span className='text-blue-600'>Email: </span>{order?.user?.email}</td>
                                         <td className="p-2 border text-center">₹{order.totalPrice.toFixed(2)}</td>
                                         <td className="p-2 border text-center">{order.status}</td>
                                         <td className="p-2 border text-center">{new Date(order.deliveryDate).toLocaleDateString()}</td>
