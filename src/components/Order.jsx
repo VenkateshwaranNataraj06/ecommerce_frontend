@@ -296,9 +296,9 @@ export default function Orders() {
 
                                 {userRole === 'admin' && orders.map(order => (
                                     <tr key={order._id}>
-                                        <td className="p-2 border text-center">{order._id}</td>
+                                        <td className="p-2 border text-center">{order?._id}</td>
                                         <td className="p-2 border text-center">{order?.user?.username}</td>
-                                        <td className="p-2 border text-center">₹{order.totalPrice}</td>
+                                        <td className="p-2 border text-center">₹{order.totalPrice.toFixed(2)}</td>
                                         <td className="p-2 border text-center">{order.status}</td>
                                         <td className="p-2 border text-center">{new Date(order.deliveryDate).toLocaleDateString()}</td>
                                         <td className="p-2 border">
@@ -361,7 +361,7 @@ export default function Orders() {
                                     <tr key={order._id}>
                                         <td className="p-2 border text-center">{order._id}</td>
                                         <td className="p-2 border text-center">{order.user.username}</td>
-                                        <td className="p-2 border text-center">₹{order.totalPrice}</td>
+                                        <td className="p-2 border text-center">₹{order.totalPrice.toFixed(2)}</td>
                                         {order.status === 'Cancelled' ? (<td className="p-2 border text-red-600 text-center ">{order.status}</td>) : (<td className="p-2 border text-green-700  text-center ">{order.status}</td>)}
                                         <td className="p-2 border text-center">{new Date(order.deliveryDate).toLocaleDateString()}</td>
                                         <td className="p-2 border">
