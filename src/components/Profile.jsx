@@ -48,17 +48,22 @@ useEffect(() => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
+
+
+        const token = Cookies.get('authToken');
+        if( token){
         const response = await getUsers();
         // console.log((response.data,"response.data[0]>>>>>>>>>>>>"));
         if (Array.isArray(response.data) && response.data.length > 0) {
-
-          if (userRole === 'admin') {
+          const role = Cookies.get('userRole');
+        
+          if ( role === 'admin') {
       
 
             const details = response.data.filter(user => user.email === usermail)
           
             if (details.length > 0) {
-              // console.log("Filtered user details:", details);
+              console.log("Filtered user details:", details);
 
               setUserDetails(details[0]);
           } else {
@@ -71,7 +76,7 @@ useEffect(() => {
             setUserDetails(response.data[0]);
           }
 
-         
+        }
         // console.log( response.data );
         
           
@@ -95,7 +100,9 @@ useEffect(() => {
             const fetchCart = async () => {
                 // console.log("fetch.......response.data,", authToken, userRole, "}");
                 try {
-                    if (userRole !== 'admin') {
+                  const role = Cookies.get('userRole');
+                
+                    if ( role !== 'admin') {
                         const response = await getCarts();
                         // console.log(response.data, "fetch.......");
                         if (response.data && typeof response.data === 'object') {
@@ -115,6 +122,8 @@ useEffect(() => {
                 }
             };
             fetchCart();
+
+                     
             console.log('Page was refreshed');
         } else {
             console.log('Initial page load');
@@ -187,7 +196,9 @@ if (isInvalid) {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 ">
   
-  {loading && <CircularProgress color="inherit" />}
+  {loading &&   <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+    <CircularProgress color="inherit" />
+  </div>}
                 <Snackbar
                     open={!!error}
                     autoHideDuration={6000}

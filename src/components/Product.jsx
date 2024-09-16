@@ -64,7 +64,7 @@ export default function Product() {
 
     const handleUpdate = async (event) => {
         event.preventDefault();
-        setLoading(true);
+        // setLoading(true);
 
         const isInvalid = Object.values(editingProduct).some(value => String(value).trim() === '');
         if (isInvalid) {
@@ -116,7 +116,7 @@ export default function Product() {
 
     const handleDelete = async (productId) => {
         // console.log("delete.....", productId);
-        setLoading(true);
+        // setLoading(true);
         confirmAlert({
             title: '',
             message: 'Are you sure you want to delete this product?',
@@ -169,7 +169,7 @@ export default function Product() {
 
     const handleAddProduct = async (event) => {
         event.preventDefault();
-        setLoading(true);
+        // setLoading(true);
         const isInvalid = Object.values(newProduct).some(value => String(value).trim() === '');
         if (isInvalid) {
             setError('All fields are required and cannot be empty.');
@@ -197,9 +197,8 @@ export default function Product() {
 
                 const response = await createProducts(formData);
 
-                console.log(response);
-                window.location.reload()
-
+                // console.log(response);
+                
             } else {
 
                 // console.log(newProduct, "(newProduct>>>>>>>>>>>>>>");
@@ -211,7 +210,7 @@ export default function Product() {
                 // console.log(newProduct, "(updated newProduct with images array >>>>>>>>>>>>>");
                 const response = await createProducts(newProduct);
                 // console.log(response);
-                window.location.reload()
+          
 
             }
            
@@ -227,6 +226,8 @@ export default function Product() {
                 name: '', price: '', stock: '', images: [], description: '', category: '', brand: '', useFileUpload: false
             });
             setShowAddProductForm(false);
+            setTimeout(()=>{ window.location.reload()},1000)
+           
         } catch (error) {
             // console.log(error);
             //console.log(error?.response?.data?.message);
@@ -325,7 +326,7 @@ export default function Product() {
                 </Button>
                 {showAddProductForm && (
                     <>
-                        <div className="static top-0 insert-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-50 z-10">
+                        <div className="fixed top-0 insert-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-50 z-10">
 
 
                             <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full ">

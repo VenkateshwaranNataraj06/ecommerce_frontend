@@ -70,11 +70,12 @@ export default function CategoryAdd() {
     };
 
     const handleCancelEdit = () => {
+        
         setEditingCategory(null);
     };
     const handleUpdate = async (event) => {
         event.preventDefault();
-        setLoading(true);
+        // setLoading(true);
 
         try {
             await updateCategory(editingCategory._id, editingCategory);
@@ -93,7 +94,7 @@ export default function CategoryAdd() {
 
     const handleAddCategory = async (event) => {
         event.preventDefault();
-        setLoading(true);
+        // setLoading(true);
 
         const isInvalid = Object.values(newCategory).some(value => value.trim() === '');
 
@@ -117,7 +118,7 @@ export default function CategoryAdd() {
             setCategories([...categories, newCategoryData]);
             setSuccess('Category added successfully');
             setNewCategory({ name: '', description: '', image: ' ' });
-            window.location.reload()
+            setTimeout(()=>{window.location.reload()},1000)   
 
         } catch (error) {
             // console.log(error.response?.data?.message);
@@ -128,7 +129,7 @@ export default function CategoryAdd() {
     };
     const handleDelete = async (categoryId) => {
         // console.log("delete.....",categoryId);
-        setLoading(true);
+        // setLoading(true);
         confirmAlert({
             title: '',
             message: 'Are you sure you want to delete this category?',
@@ -209,7 +210,7 @@ export default function CategoryAdd() {
                     <Box display="flex" justifyContent="flex-end">
                         <IconButton
                             color="inherit"
-                            onClick={() => setShowAddCategoryForm(!showAddCategoryForm)}
+                            onClick={() => {setShowAddCategoryForm(!showAddCategoryForm); setNewCategory({ name: '', description: '', image: ' ' });}}
 
                         >
                             <CloseIcon sx={{

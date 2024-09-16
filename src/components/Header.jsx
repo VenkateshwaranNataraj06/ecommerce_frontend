@@ -155,7 +155,7 @@ export default function Header() {
                   </Link>
 
                 </li> */}
-             <li onMouseOverCapture={toggleDrawer}> <Avatar
+             <li onMouseOverCapture={toggleDrawer}  onClick={toggleDrawer}> <Avatar
                 sx={{ width: 32, height: 32, bgcolor: 'gray' }}
               >
               </Avatar>

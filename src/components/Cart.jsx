@@ -102,7 +102,11 @@ export default function Cart () {
 
   const addToCart = async (productId, quantity) => {
     try {
+   
+        
       if (authToken) {
+
+        
         if (quantity < 11) {
           const response = await createCarts(productId, quantity);
           console.log(response.data);
@@ -134,10 +138,14 @@ export default function Cart () {
   const removeFromCart = async (productId) => {
     try {
       if (authToken) {
+        console.log(productId,"productIddlete");
+        
         const response = await deleteCarts(productId);
         console.log(response.data);
         setCart(response.data);
         setCartlength(response.data.items.length)
+        setSuccess('cart removed successfully ')
+        
         console.log(response.data.items.length, "response.data[0].items.length");
 
       }
@@ -147,9 +155,10 @@ export default function Cart () {
         localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
         setCart(updatedCartItems);
         setCartlength(updatedCartItems.length);
+        setSuccess('cart removed successfully ')
       }
     } catch (error) {
-      console.error('Error removing from cart:', error.response?.data.message
+      console.error('Error removing from cart:', error.response?.data?.message
       );
     }
   };
@@ -185,6 +194,8 @@ export default function Cart () {
       Loading...
     </Typography>;
   }
+//  console.log(cartlength,"cartlength");
+ 
   return (
 
     <>
@@ -199,6 +210,16 @@ export default function Cart () {
           {error}
         </Alert>
       </Snackbar>
+      <Snackbar
+                open={!!success}
+                autoHideDuration={6000}
+                onClose={() => setSuccess('')}
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            >
+                <Alert onClose={() => setSuccess('')} severity="success">
+                    {success}
+                </Alert>
+            </Snackbar>
       <div className='mb-10'>
         {authToken && userRole !== 'admin' && <Grid container spacing={2} sx={{ width: '100%', justifyContent: 'center', alignItems: 'center', marginTop: '10px' }}>
           {cart?.items?.map((item) => (
@@ -306,7 +327,7 @@ export default function Cart () {
           })}
         </Grid>
 
-        {!loading && cart.length === 0 &&
+        {!loading && cartlength=== 0 &&
           <Typography variant="h6" textAlign='center' marginTop='20px'>No Carts Available</Typography>
         }
 

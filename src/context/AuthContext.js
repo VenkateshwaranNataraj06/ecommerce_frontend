@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }) => {
 
       }
       else {
-        console.log(userRole, "/homeuserRoleuserRoleuserRole");
+        // console.log(userRole, "/homeuserRoleuserRoleuserRole");
         navigate('/');
       }
 
