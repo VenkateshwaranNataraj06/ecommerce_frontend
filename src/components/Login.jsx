@@ -11,6 +11,7 @@ export default function Login ()  {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
   const [isErrorPopupOpen, setIsErrorPopupOpen] = useState(false);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const { login ,userRole} = useContext(AuthContext);
   const navigate = useNavigate(); 
  const {cartlength, setCartlength,cart,setCart}=useContext(ProductContext)
@@ -23,7 +24,7 @@ export default function Login ()  {
     try {
 
    const response=  await login(credentials);
-
+   setSuccess("Login Successfully")
 
      
      const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
@@ -38,7 +39,8 @@ export default function Login ()  {
         }             
       }       
          localStorage.removeItem('cartItems'); 
-     
+      
+       
     } catch (error) {
       // console.log("eroorr", error);
       const errorMessage = error?.response?.data?.message || error.message || 'Login failed';
@@ -64,7 +66,7 @@ export default function Login ()  {
     
     >
 
- <Snackbar
+ {/* <Snackbar
         open={isErrorPopupOpen}
         autoHideDuration={6000}
         onClose={() => setIsErrorPopupOpen(false)}
@@ -77,8 +79,27 @@ export default function Login ()  {
         >
           {error}
         </Alert>
-      </Snackbar>
-
+      </Snackbar> */}
+      <Snackbar
+                    open={!!error}
+                    autoHideDuration={6000}
+                    onClose={() => setError('')}
+                    anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                >
+                    <Alert onClose={() => setError('')} severity="error">
+                        {error}
+                    </Alert>
+                </Snackbar>
+      <Snackbar
+                    open={!!success}
+                    autoHideDuration={6000}
+                    onClose={() => setSuccess('')}
+                    anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                >
+                    <Alert onClose={() => setSuccess('')} severity="success">
+                        {success}
+                    </Alert>
+                </Snackbar>
       <Container component="main" maxWidth="xs" sx={{
         display: 'flex',
         flexDirection: 'column',

@@ -76,6 +76,12 @@ export default function CategoryAdd() {
     const handleUpdate = async (event) => {
         event.preventDefault();
         // setLoading(true);
+        const isInvalid = Object.values(editingCategory).some(value => value.trim() === '');
+
+        if (isInvalid) {
+            setError('All fields are required and cannot be empty.')
+            return;
+        }
 
         try {
             await updateCategory(editingCategory._id, editingCategory);

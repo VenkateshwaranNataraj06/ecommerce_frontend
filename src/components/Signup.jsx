@@ -151,7 +151,7 @@ export default function Signup() {
                     </div>
                     <input 
                         name="phonenumber" 
-                         pattern="[7-9]{1}[0-9]{9}"
+                         pattern="[6-9]{1}[0-9]{9}"
                         value={formData.phonenumber} 
                         onChange={handleChange} 
                         placeholder="Phonenumber" 

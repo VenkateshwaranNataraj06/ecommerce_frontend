@@ -9,8 +9,6 @@ import { confirmAlert } from 'react-confirm-alert';
 
 export default function OrderForm () {
 
-  
- 
   const { products, orderProductId, setOrderProductId ,setQuantity,quantity,cart,setCart,setCartlength} = useContext(ProductContext);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -151,6 +149,32 @@ export default function OrderForm () {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+        
+    const isInvalid = (state) => {
+   
+      const checkValues = (obj) => {
+        return Object.values(obj).some(value => {
+          if (typeof value === 'object' && value !== null) {
+        
+            return checkValues(value);
+          } else {
+            const trimmedValue = String(value).trim();
+            console.log(trimmedValue); 
+            return trimmedValue === '';
+          }
+        });
+      };
+    
+      return checkValues(state);
+    };
+
+
+    const invalid = isInvalid(formState);    
+    if (invalid ) {
+      setError('All fields are required and cannot be empty.');
+      return; 
+    }
     confirmAlert({
       title: '',
       message: ' Available payment Method is Cash On Delivery?',
@@ -160,11 +184,7 @@ export default function OrderForm () {
               onClick: async () => {
                  
     try {
-      const isInvalid = Object.values(formState).some(value => String(value).trim() === '');           
-      if (isInvalid) {
-        setError('All fields are required and cannot be empty.');
-        return; 
-      }
+  
             const response = await createOrders(formState);
             // console.log('Order submitted successfully:', response.data);
             setFormState(initialFormState);
@@ -173,7 +193,7 @@ export default function OrderForm () {
           await  removeFromCart(formState.products[0].product)
               // setSuccess('cart delete successfully!');
                setQuantity(1)
-          setTimeout(()=>navigate('/order'),500)  
+          setTimeout(()=>navigate('/order'),300)  
           } catch (error) {
             console.error('Error submitting order:', error);
             setError('Error submitting order ' + error.message);

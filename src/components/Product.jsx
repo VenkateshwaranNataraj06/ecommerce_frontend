@@ -458,7 +458,9 @@ export default function Product() {
                                     <Button
                                         variant="contained"
                                         color="primary"
-                                        onClick={() => setShowAddProductForm(!showAddProductForm)}
+                                        onClick={() =>{ setShowAddProductForm(!showAddProductForm)  ;setNewProduct({
+                                            name: '', price: '', stock: '', images: [], description: '', category: '', brand: '', useFileUpload: false
+                                        })}}
                                         className="mt-4"
                                     >
 

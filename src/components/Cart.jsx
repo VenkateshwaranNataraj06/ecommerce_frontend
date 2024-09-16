@@ -61,7 +61,7 @@ export default function Cart () {
     } else {
       console.log('No token found');
     }
-  }, []);
+  }, [authToken]);
 
 
   useEffect(() => {
@@ -90,7 +90,7 @@ export default function Cart () {
         }
 
       } catch (error) {
-        console.error('Error fetching cart data:', error.response?.data?.message || error.message);
+        console.error('Error fetching cart data:', error?.response?.data?.message || error.message);
       }
       finally{
         setLoading(false)
@@ -102,6 +102,7 @@ export default function Cart () {
 
   const addToCart = async (productId, quantity) => {
     try {
+  //  console.log(authToken,"authToken");
    
         
       if (authToken) {
@@ -110,8 +111,10 @@ export default function Cart () {
         if (quantity < 11) {
           const response = await createCarts(productId, quantity);
           console.log(response.data);
+          setSuccess('Cart added Successfully')
           setCart(response.data);
           setCartlength(response.data[0].items.length)
+          
         }
         else {
           setError("maximum quantity limit is 10")

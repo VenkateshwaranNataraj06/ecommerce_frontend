@@ -1,12 +1,14 @@
-
 import React, { useState, useEffect, useContext } from 'react';
 import { deleteOrders, getOrders, updateOrders } from '../services/orderServices';
-import {CircularProgress, Snackbar, Alert,Typography} from '@mui/material';
+import {CircularProgress, Snackbar, Alert,Typography, Card, CardContent, CardMedia,  TextField, Divider,} from '@mui/material';
 import { confirmAlert } from 'react-confirm-alert';
 import ProductContext from '../context/ProductContext';
 import { getCarts } from '../services/cartServices';
 import AuthContext from '../context/AuthContext';
 import Cookies from 'js-cookie';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+
+
 export default function Orders() {
     const [orders, setOrders] = useState([]);
     const [editingOrderId, setEditingOrderId] = useState(null);
@@ -16,7 +18,14 @@ export default function Orders() {
     const [success, setSuccess] = useState('');
     const { authToken, userRole, setUserRole, setAuthToken } = useContext(AuthContext);
     const { setCartlength, setCart, } = useContext(ProductContext)
+    const [minDate, setMinDate] = useState('');
 
+    useEffect(() => {
+        
+        const today = new Date().toISOString().split('T')[0];
+        setMinDate(today);
+      }, []);
+    
     useEffect(() => {
         const role = Cookies.get('userRole');
         const token = Cookies.get('authToken');
@@ -95,7 +104,7 @@ export default function Orders() {
 
 
     const handleDelete = async (id) => {
-        setLoading(true);
+        // setLoading(true);
         confirmAlert({
             title: '',
             message: 'Are you sure you want to delete this order?',
@@ -273,9 +282,23 @@ export default function Orders() {
                         {success}
                     </Alert>
                 </Snackbar>
-
+              
                 <div className="w-full mt-4">
-                    <h1 className="text-3xl font-semibold mb-4 text-center mt-4">Orders</h1>
+                    {/* <h1 className="text-3xl font-semibold mb-4 text-center mt-4">Orders</h1> */}
+                    <div className="flex items-center justify-center  p-4">
+                        <Card className="w-full max-w-sm shadow-lg">
+                            <CardContent>
+                                <Typography variant="h5" component="div" gutterBottom textAlign='center'>
+                                    <AddShoppingCartIcon className="align-middle mr-2" /> 
+                                    Order Summary
+                                </Typography>
+                                <Divider className="my-2" />
+                                <Typography variant="h6" component="div" textAlign='center'>
+                                    Total Orders: <strong>{orders.length}</strong>
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    </div>
                     <div className="overflow-x-auto">
                         <table className="w-full bg-white shadow-md rounded-lg min-w-max">
                             <thead>
@@ -455,9 +478,9 @@ export default function Orders() {
                                     required
 
                                 >
-                                    <option value="Processing">Processing</option>
-                                    <option value="Shipped">Shipped</option>
-                                    <option value="Delivered">Delivered</option>
+                                 <option value="Processing">Processing</option>
+                                 <option value="Shipped">Shipped</option>
+                                 <option value="Delivered">Delivered</option>
                          
                                 </select>)
                                 }
@@ -472,6 +495,7 @@ export default function Orders() {
                                     onChange={(e) => setFormData({ ...formData, deliveryDate: e.target.value })}
                                     className="ml-2 border p-1 rounded"
                                     required
+                                    min={minDate}
                                 />
                             </label>
                                                 
